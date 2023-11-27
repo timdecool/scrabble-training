@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap');
+
+/* GENERAL LAYOUT */
+body {
+    background-color: rgb(6, 54, 28);
+    font-family: 'Lexend';
+}
+
+.board {
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(15, 40px);
+    grid-template-rows: repeat(15, 40px);
+    gap: 3px;
+}
+
+/* SLOTS */
+
+.slot {
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    background-color: rgb(230, 230, 230);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 7px;
+    font-weight: bold;
+    user-select: none;
+}
+
+.slot-tw {
+    background-color: rgb(255, 72, 72);
+    border: 1px solid rgb(255, 72, 72);
+}
+
+.slot-dw {
+    background-color: rgb(255, 160, 125);
+    border: 1px solid rgb(255, 160, 125);
+
+}
+
+.slot-tl {
+    background-color: rgb(85, 85, 255);
+    border: 1px solid rgb(85, 85, 255);
+
+}
+
+.slot-dl {
+    background-color:rgb(139, 203, 255);
+    border: 1px solid rgb(139, 203, 255);
+
+}
+
+.slot-center {
+    background-color: rgb(255, 120, 71);
+    border: 1px solid rgb(255, 120, 71);
+}
+
+.center-circle {
+    background-color: rgb(34, 34, 34);
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+}
