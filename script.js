@@ -9,16 +9,57 @@ title.textContent = 'Nouvelle partie';
 const form = document.createElement('form');
 settings.appendChild(title);
 settings.appendChild(form);
+form.innerHTML = `
+<div>
+    <label for="nbPlayers">Nombre de joueurs</label>
+    <select id="nbPlayers" name="nbPlayers">
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+    </select>
+</div>
+<button id="startBtn">Démarrer la partie</button>`;
+
+const startBtn = document.querySelector('#startBtn');
+const nbPlayers = document.querySelector('#nbPlayers');
+
+startBtn.addEventListener('click',startGame);
+const players = [];
 
 
+function startGame(e) {
+    e.preventDefault();
+    addLetters();
 
+    for(let i=0; i<nbPlayers.value; i++) {
+        players.push({
+            'playerId' : i+1,
+            'playerName' : `Joueur ${i+1}`,
+            'score' : 0,
+            'letters': []
+        })
 
-// Game board
-const board = document.createElement('section');
-board.classList.add('board');
-app.appendChild(board);
+        giveLetters(i);
+    }
+
+    settings.classList.add('hidden');
+    createGrid();
+}
+
+function giveLetters(playerIndex) {
+    while(players[playerIndex].letters.length < 7) {
+        const letter = Math.floor(Math.random()*letters.length);
+        players[playerIndex].letters.push(letters[letter]);
+        letters.splice(letter,1);
+    }
+}
 
 function createGrid() {
+    // Game board
+    const board = document.createElement('section');
+    board.classList.add('board');
+    app.appendChild(board);
+
     for(let i=0; i<15; i++) {
         for(let j=0;j<15;j++) {
             // Create slot
@@ -41,9 +82,9 @@ function createGrid() {
 
             // triple word
             if( (i === 0 || i === 7 || i === 14) && (j === 0 || j=== 7 || j === 14) && !slot.hasAttribute('data-effect') ) {
-               slot.setAttribute('data-effect', 'tw');
-               slot.classList.add('slot-tw');
-               slot.textContent = "MOT TRIPLE";
+                slot.setAttribute('data-effect', 'tw');
+                slot.classList.add('slot-tw');
+                slot.textContent = "MOT TRIPLE";
             }
 
             // triple letter
@@ -84,7 +125,7 @@ function addLetter(qty,letter,score) {
         letters.push({'letter':letter, 'score':score})
     }
 }
-(function addLetters() {
+function addLetters() {
     addLetter(9,"A",1);
     addLetter(15,"E",1);
     addLetter(8,"I",1);
@@ -111,7 +152,5 @@ function addLetter(qty,letter,score) {
     addLetter(1,"X",10);
     addLetter(1,"Y",10);
     addLetter(1,"Z",10);
-})();
+};
 
-// Player
-const players = [];

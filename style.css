@@ -13,6 +13,10 @@ body {
     font-family: 'Lexend';
 }
 
+.hidden {
+    display: none;
+}
+
 #app {
     display: flex;
     justify-content: center;
@@ -20,7 +24,6 @@ body {
 }
 
 .board {
-    margin: auto;
     display: grid;
     grid-template-columns: repeat(15, 40px);
     grid-template-rows: repeat(15, 40px);
@@ -28,16 +31,18 @@ body {
 }
 
 .settings-section {
-    margin: auto;
     background-color: rgb(230,230,230);
     border-radius: 5px;
-    padding: 10px;
+    padding: 30px;
+    text-align:center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
+    gap: 10px;
 }
 
 /* SLOTS */
