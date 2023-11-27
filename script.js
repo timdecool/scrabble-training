@@ -1,13 +1,22 @@
 const app = document.querySelector('#app');
 
-const board = document.createElement('div');
+// Params
+const settings = document.createElement('section');
+app.appendChild(settings);
+settings.classList.add('settings-section');
+const title = document.createElement('h2');
+title.textContent = 'Nouvelle partie';
+const form = document.createElement('form');
+settings.appendChild(title);
+settings.appendChild(form);
+
+
+
+
+// Game board
+const board = document.createElement('section');
 board.classList.add('board');
 app.appendChild(board);
-
-(function generateBoard() {
-    createGrid();
-    
-})();
 
 function createGrid() {
     for(let i=0; i<15; i++) {
@@ -67,3 +76,42 @@ function createGrid() {
         }
     }
 }
+
+// Letters
+const letters = [];
+function addLetter(qty,letter,score) {
+    for(let i=0; i<qty; i++) {
+        letters.push({'letter':letter, 'score':score})
+    }
+}
+(function addLetters() {
+    addLetter(9,"A",1);
+    addLetter(15,"E",1);
+    addLetter(8,"I",1);
+    addLetter(5,"L",1);
+    addLetter(6,"N",1);
+    addLetter(6,"O",1);
+    addLetter(6,"R",1);
+    addLetter(6,"S",1);
+    addLetter(6,"T",1);
+    addLetter(6,"U",1);
+    addLetter(3,"D",2);
+    addLetter(2,"G",2);
+    addLetter(3,"M",2);
+    addLetter(2,"B",3);
+    addLetter(2,"C",3);
+    addLetter(2,"P",3);
+    addLetter(2,"F",4);
+    addLetter(2,"H",4);
+    addLetter(2,"V",4);
+    addLetter(1,"J",8);
+    addLetter(1,"Q",8);
+    addLetter(1,"K",10);
+    addLetter(1,"W",10);
+    addLetter(1,"X",10);
+    addLetter(1,"Y",10);
+    addLetter(1,"Z",10);
+})();
+
+// Player
+const players = [];
