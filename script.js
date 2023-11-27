@@ -141,8 +141,7 @@ function createGrid() {
             // Create slot
             const slot = document.createElement('div');
             slot.classList.add('slot');
-            slot.setAttribute('data-position-x', i);
-            slot.setAttribute('data-position-y', j);
+            slot.setAttribute('data-position', 15*i+j);
             slot.setAttribute('data-status','available');
             board.appendChild(slot);
             slot.addEventListener('click', moveLetter);
@@ -245,5 +244,11 @@ function addLetters() {
 };
 
 function checkWord() {
-    console.log('coucou');
+    findNewWords();
+}
+
+function findNewWords() {
+    for(tile of app.children[1].children) {
+        console.log(tile.dataset.position, tile.dataset.status)
+    }
 }
