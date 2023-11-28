@@ -9,18 +9,25 @@ html,body, #app {
     height: 100%;
 }
 body {
-    background-color: rgb(28, 95, 14);
+    background-color: rgb(114, 180, 101);
     font-family: 'Lexend';
+}
+
+.hidden {
+    display: none;
 }
 
 #app {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 30px;
 }
 
 .board {
-    margin: auto;
+    background-color: rgb(14, 48, 7);
+    padding: 20px;
+    border-radius: 10px;
     display: grid;
     grid-template-columns: repeat(15, 40px);
     grid-template-rows: repeat(15, 40px);
@@ -28,19 +35,75 @@ body {
 }
 
 .settings-section {
-    margin: auto;
     background-color: rgb(230,230,230);
     border-radius: 5px;
-    padding: 10px;
+    padding: 30px;
+    text-align:center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-
+    gap: 10px;
 }
 
 /* SLOTS */
+.player-space {
+    background-color: rgb(14, 48, 7);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.player-space>h3 {
+    margin: 0;
+}
+
+.player-letters {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.tile {
+    height: 40px;
+    width: 40px;
+    border-radius: 5px;
+    background-color: rgb(211, 219, 172);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    color: black;
+}
+
+.tile.selected {
+    filter: brightness(1.4);
+}
+
+.tile.used {
+    filter: brightness(0.6)
+}
+
+.tile p {
+    font-size: 25px;
+}
+
+.tile>.tile-score {
+    font-size: 10px;
+    position: absolute;
+    right: 4px;
+    top: 17px;
+}
 
 .slot {
     height: 40px;
@@ -53,7 +116,6 @@ body {
     align-items: center;
     text-align: center;
     font-size: 7px;
-    font-weight: bold;
     user-select: none;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     cursor: pointer;
@@ -62,30 +124,25 @@ body {
 
 .slot-tw {
     background-color: rgb(255, 72, 72);
-    border: 1px solid rgb(255, 72, 72);
 }
 
 .slot-dw {
     background-color: rgb(255, 160, 125);
-    border: 1px solid rgb(255, 160, 125);
 
 }
 
 .slot-tl {
     background-color: rgb(85, 85, 255);
-    border: 1px solid rgb(85, 85, 255);
 
 }
 
 .slot-dl {
     background-color:rgb(139, 203, 255);
-    border: 1px solid rgb(139, 203, 255);
 
 }
 
 .slot-center {
     background-color: rgb(255, 120, 71);
-    border: 1px solid rgb(255, 120, 71);
 }
 
 .center-circle {
