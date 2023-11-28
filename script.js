@@ -9,7 +9,7 @@ title.textContent = 'Nouvelle partie';
 const form = document.createElement('form');
 settings.appendChild(title);
 settings.appendChild(form);
-
+form.innerHTML=``
 
 
 
