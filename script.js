@@ -1,6 +1,6 @@
-import Letters from './modules/Letters.js';
-const letters = new Letters();
-console.log(letters);
+import BagOfTiles from './modules/Letters.js';
+
+const bagOfTiles = new BagOfTiles();
 
 const app = document.querySelector('#app');
 
@@ -34,8 +34,6 @@ let curLetter;
 
 function startGame(e) {
     e.preventDefault();
-    addLetters();
-
     for(let i=0; i<nbPlayers.value; i++) {
         players.push({
             'playerId' : i+1,
@@ -44,8 +42,9 @@ function startGame(e) {
             'letters': []
         })
 
-        giveLetters(i);
+        bagOfTiles.drawLetters(i);
     }
+
     settings.classList.add('hidden');
     createGrid();
     createPlayerSpace();
@@ -123,14 +122,6 @@ function moveLetter(e) {
 
     }
 
-}
-
-function giveLetters(playerIndex) {
-    while(players[playerIndex].letters.length < 7 && letters.length > 0) {
-        const letter = Math.floor(Math.random()*letters.length);
-        players[playerIndex].letters.push(letters[letter]);
-        letters.splice(letter,1);
-    }
 }
 
 function createGrid() {
@@ -211,7 +202,40 @@ function createPlayerSpace() {
     playerSpace.appendChild(validateBtn);
 }
 
-
+// Letters
+function addLetter(qty,letter,score) {
+    for(let i=0; i<qty; i++) {
+        letters.push({'letter':letter, 'score':score})
+    }
+}
+function addLetters() {
+    addLetter(9,"A",1);
+    addLetter(15,"E",1);
+    addLetter(8,"I",1);
+    addLetter(5,"L",1);
+    addLetter(6,"N",1);
+    addLetter(6,"O",1);
+    addLetter(6,"R",1);
+    addLetter(6,"S",1);
+    addLetter(6,"T",1);
+    addLetter(6,"U",1);
+    addLetter(3,"D",2);
+    addLetter(2,"G",2);
+    addLetter(3,"M",2);
+    addLetter(2,"B",3);
+    addLetter(2,"C",3);
+    addLetter(2,"P",3);
+    addLetter(2,"F",4);
+    addLetter(2,"H",4);
+    addLetter(2,"V",4);
+    addLetter(1,"J",8);
+    addLetter(1,"Q",8);
+    addLetter(1,"K",10);
+    addLetter(1,"W",10);
+    addLetter(1,"X",10);
+    addLetter(1,"Y",10);
+    addLetter(1,"Z",10);
+};
 
 function checkWords(words) {
     let isValid = true;

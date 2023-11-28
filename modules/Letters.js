@@ -1,8 +1,16 @@
-export default class Letters {
+export default class BagOfTiles {
     letters = []
 
     constructor() {
         this.addLetters();
+    }
+
+    drawLetters(playerIndex) {
+        while(players[playerIndex].letters.length < 7 && letters.length > 0) {
+            const letter = Math.floor(Math.random()*letters.length);
+            players[playerIndex].letters.push(letters[letter]);
+            letters.splice(letter,1);
+        }
     }
 
     addLetter(qty,letter,score) {
