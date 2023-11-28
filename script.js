@@ -1,3 +1,7 @@
+import Letters from './modules/Letters.js';
+const letters = new Letters();
+console.log(letters);
+
 const app = document.querySelector('#app');
 
 // Params
@@ -25,10 +29,8 @@ const nbPlayers = document.querySelector('#nbPlayers');
 
 startBtn.addEventListener('click',startGame);
 const players = [];
-const letters = [];
 let curPlayer = 0;
 let curLetter;
-
 
 function startGame(e) {
     e.preventDefault();
@@ -44,7 +46,6 @@ function startGame(e) {
 
         giveLetters(i);
     }
-
     settings.classList.add('hidden');
     createGrid();
     createPlayerSpace();
@@ -69,6 +70,8 @@ function nextPlayer() {
         tile.appendChild(tileScore);
         tile.addEventListener('click', selectTile);
     }
+
+    curPlayer++;
 }
 
 function selectTile(e) {
@@ -203,52 +206,87 @@ function createPlayerSpace() {
     playerLetters.classList.add('player-letters');
     playerSpace.appendChild(playerLetters);
     const validateBtn = document.createElement('button');
-    validateBtn.addEventListener('click', checkWord);
+    validateBtn.addEventListener('click', findNewWords);
     validateBtn.textContent = "Valider";
     playerSpace.appendChild(validateBtn);
 }
 
-// Letters
-function addLetter(qty,letter,score) {
-    for(let i=0; i<qty; i++) {
-        letters.push({'letter':letter, 'score':score})
-    }
-}
-function addLetters() {
-    addLetter(9,"A",1);
-    addLetter(15,"E",1);
-    addLetter(8,"I",1);
-    addLetter(5,"L",1);
-    addLetter(6,"N",1);
-    addLetter(6,"O",1);
-    addLetter(6,"R",1);
-    addLetter(6,"S",1);
-    addLetter(6,"T",1);
-    addLetter(6,"U",1);
-    addLetter(3,"D",2);
-    addLetter(2,"G",2);
-    addLetter(3,"M",2);
-    addLetter(2,"B",3);
-    addLetter(2,"C",3);
-    addLetter(2,"P",3);
-    addLetter(2,"F",4);
-    addLetter(2,"H",4);
-    addLetter(2,"V",4);
-    addLetter(1,"J",8);
-    addLetter(1,"Q",8);
-    addLetter(1,"K",10);
-    addLetter(1,"W",10);
-    addLetter(1,"X",10);
-    addLetter(1,"Y",10);
-    addLetter(1,"Z",10);
-};
 
-function checkWord() {
-    findNewWords();
+
+function checkWords(words) {
+    let isValid = true;
+    for(word of words) {
+        if(!validWords.includes(word)) isValid = false;
+    }     
+    return isValid;       
 }
 
 function findNewWords() {
-    for(tile of app.children[1].children) {
-        console.log(tile.dataset.position, tile.dataset.status)
+    let newWords = [];
+
+    for(let i = 0; i<app.children[1].children.length; i++) {
+        const tile = app.children[1].children[i];
+        if(tile.dataset.status === "used") {
+            let newWord = tile.firstChild.firstChild.textContent;
+            // check for horizontal word
+            let offset = 1;
+            while(app.children[1].children[i-offset] != null && app.children[1].children[i-offset].dataset.status != "available") {
+                newWord = app.children[1].children[i-offset].firstChild.firstChild.textContent + newWord;
+                offset++;
+            }
+            offset = 1;
+            while(app.children[1].children[i+offset] != null && app.children[1].children[i+offset].dataset.status != "available") {
+                newWord = newWord + app.children[1].children[i+offset].firstChild.firstChild.textContent;
+                offset++;
+            }
+            newWords.push(newWord);
+
+            // check for vertical word
+            newWord = tile.firstChild.firstChild.textContent;
+            offset = 15;
+            while(app.children[1].children[i-offset] != null && app.children[1].children[i-offset].dataset.status != "available") {
+                newWord = app.children[1].children[i-offset].firstChild.firstChild.textContent + newWord;
+                offset = offset + 15;
+            }
+            
+            offset = 15;
+            while(app.children[1].children[i+offset] != null && app.children[1].children[i+offset].dataset.status != "available") {
+                newWord = newWord + app.children[1].children[i+offset].firstChild.firstChild.textContent;
+                offset = offset + 15;
+            }
+            newWords.push(newWord);
+
+            
+        }
+    }
+
+    let words = [];
+    for(let i=0; i<newWords.length; i++) {
+        if(newWords[i].length > 2) {
+            words.push(newWords[i])
+        }
+        words = [...new Set(words)];
+    }
+
+    if(checkWords(words)) {
+        nextPlayer();
     }
 }
+
+validWords = [];
+// Methods
+(async function importDictionary() {
+    try {
+        const reponse = await fetch('mots.txt');
+        const contenu = await reponse.text();
+        let lines = contenu.split('\n');
+
+        lines = lines.map(line => line.replace ('\r', ''));
+        lines = lines.map(line => line.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase());
+        lines = lines.filter(line => line.length > 1 && line.length < 15);
+        validWords = [...new Set(lines)];
+    } 
+    catch(error) {
+        console.error('Une erreur s\'est produite lors de l\'importation du fichier :', error);
+    }
+})();
